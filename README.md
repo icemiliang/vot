@@ -17,7 +17,7 @@ $ make [-j7]
 
 Also, check Makefile, config.mk to change paths to requied libraries, e.g. Eigen.
 
-A command-line program is built from vot.cpp in demos/
+A command-line program is built from vot.cpp in demo/
 
 A minimum command for running vot:
 ```
@@ -46,8 +46,10 @@ Boost is mainly for I/O and is not necessary for using vot. You can skip it if y
   -h [ --help ]                         Print help messages
 ```
 
+One iteration of the Wasserstein clustering is optimal transport. If you only want to compute the transport, set iterP to 1.
+
 ## Input and output files
-Sample input files are provided in demos/data/
+Sample input files are provided in demo/data/
 
 ### Input:
 
@@ -65,10 +67,10 @@ Sample input files are provided in demos/data/
 
   *.gnu specifies the resulting power Voronoi diagram.
 
-Output files are compatible with Gnuplot. A sample Gnuplot script (gnuplotScripts.txt) is also provided in demos/. If you are using the sample files, the script should plot the picture above.
+Output files are compatible with Gnuplot. A sample Gnuplot script (gnuplotScripts.txt) is also provided in demo/. If you are using the sample files, the script should plot the picture above.
 
 ## Code structure
-The command-line program is built from demos/vot.cpp
+The command-line program is built from demo/vot.cpp
 
 The main body of the vot code is in src/ot.cc and src/diagram.cc
 
@@ -86,7 +88,6 @@ Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clus
   booktitle={Proceedings of the European Conference on Computer Vision (ECCV)},
   pages={322--337},
   year={2018}
-
 }
 ```
 
