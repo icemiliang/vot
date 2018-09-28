@@ -5,7 +5,7 @@ This package includes the prototype codes for reproducing the mapping in Figure 
 
 Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clustering." In Proceedings of the European Conference on Computer Vision (ECCV), pp. 322-337. 2018.
 
-![alt text](demos/sample.png?raw=true "Demo of Variational Wasserstein Clustering")
+![alt text](demo/sample.png?raw=true "Demo of Variational Wasserstein Clustering")
 
 ## Build and run
 
