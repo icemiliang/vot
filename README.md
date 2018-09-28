@@ -9,6 +9,8 @@ Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clus
 
 ## Build and run
 
+[![Build status](https://ci.appveyor.com/api/projects/status/7yw0ao44kfvjavfw?svg=true)](https://ci.appveyor.com/project/icemiliang/vot))
+
 In the root directory, run:
 ```
 $ make clean
