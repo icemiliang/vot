@@ -1,0 +1,9 @@
+set xrange [-1.1:1.1]
+set yrange [-1.1:1.1]
+set zrange [-1.1:1.1]
+
+set key left bottom
+
+splot 'data/empirical.vot' using 1:2:3 with points pointtype 7 ps 0.5,\
+'Ddirac_Eempirical_5_0.vot' using 1:2:3 with points pointtype 7 ps 2,\
+'Ddirac_Eempirical_diagram_5_0.gnu' with lines
