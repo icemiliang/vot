@@ -37,6 +37,7 @@ protected:
     int mMaxIterH;
     double mThres;
     double mLearnRate;
+    int mMethod; // Newton or GD
 };
 
 }

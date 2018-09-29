@@ -13,16 +13,16 @@ objs=cell.o common.o container.o unitcell.o v_compute.o c_loops.o \
 src=$(patsubst %.o,%.cc,$(objs))
 
 # Makefile rules
-all: $(objs) libvot++.a
+all: $(objs) libvot.a
 
 depend:
 	$(CXX) $(E_INC) -MM $(src) >Makefile.dep
 
 include Makefile.dep
 
-libvot++.a: $(objs)
-	rm -f libvot++.a
-	ar rs libvot++.a $^
+libvot.a: $(objs)
+	rm -f libvot.a
+	ar rs libvot.a $^
 
 %.o: %.cc
 	$(CXX) $(CFLAGS) $(E_INC) -c $<
@@ -32,5 +32,5 @@ help: Doxyfile $(SOURCE)
 
 clean:
 	rm -f $(objs)
-	rm -f libvot++.a
+	rm -f libvot.a
 	

@@ -25,7 +25,7 @@ namespace vot {
     const double otMaxDouble = std::numeric_limits<double>::max();
     const double otMinDouble = -std::numeric_limits<double>::max();
 
-    const int METHOD_GRADIENT = 1; // Gradient descent
+    const int METHOD_GD = 1; // Gradient descent
     const int METHOD_NEWTON = 2; // Newton's
 
     const double ballCenterX = 0, ballCenterY = 0, ballCenterZ = 0, ballRadius = 1.05;

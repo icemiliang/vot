@@ -653,67 +653,8 @@ class container_poly : public container_base, public radius_poly {
             fclose(fp);
         }
 
-
-        // Liang Mi Created 12/1/2017, Modified 06/01/2018
-        inline void update_diagram(std::vector<vot::Dirac> &centroids, Eigen::MatrixXd &hessian) {
-            c_loop_all vl(*this);
-            voronoicell_neighbor c;
-            // std::vector<T> tripletList;
-            // tripletList.reserve(20000);
-            if (vl.start()) {
-                do {
-                    compute_cell(c, vl);
-
-                    // Compute Hessians
-                    // int idx = id[vl.ijk][vl.q];
-                    // double *pp;
-                //    pp = p[vl.ijk] + ps*vl.q; // Coordinates of the current Centroid
-
-                   std::vector<int> nids;
-                   std::vector<double> face_areas;
-                   c.neighbors(nids);
-                   c.face_areas(face_areas);
-                   assert(nids.size() == face_areas.size());
-
-                //    for (int i = 0; i < (int)nids.size(); i++) {
-                //        if (nids[i] < 0) continue;
-                //        vot::Point tmp = vot::Point(centroids[nids[i]].x() - pp[0], centroids[nids[i]].y() - pp[1], centroids[nids[i]].z() - pp[2]);
-                //        double dist = tmp.norm();
-                //        tripletList.push_back(T(idx, nids[i], -face_areas[i] / dist));
-                //        //hessian(idx,nids[i]) = - face_areas[i] / dist;
-                //    }
-
-                } while (vl.inc());
-
-                //hessianSparse.setFromTriplets(tripletList.begin(), tripletList.end());
-
-
-                //for (int iCol = 0; iCol < hessian.cols(); iCol++) {
-                //     sm1.col(j)
-
-
-                //    //double sum = 0;
-                //    //for (int iRow = 0; iRow < hessian.rows(); iRow++) {
-                //    //    sum -= hessian(iRow, iCol);
-                //    //}
-                //    //assert(abs(hessian(iCol, iCol) - 0) < vot::otTOLERANCE);
-                //    //hessian(iCol, iCol) = sum;
-                //}
-                //std::cout << hessian << std::endl;
-                //std::cout << hessian.transpose() << std::endl;
-                ////std::cout << hessian - hessian.transpose() << std::endl;
-                //Eigen::MatrixXd hessian = hessian + hessian.transpose();
-                //std::cout << hessian << std::endl;
-                //hessian /= 2;
-                //std::cout << hessian << std::endl;
-                //// Check if the matrix is symmetric
-                //if (!hessian.isApprox(hessian.transpose())) {
-                //    std::cout << "Alert: Hessian not strictlyl symmetric." << std::endl;
-                //}
-                //std::cout << hessian << std::endl;
-            }
-        }
-
+        // Liang Mi Created 12/1/2017, Modified 09/28/2018
+        // Update the diagram with current h
         inline void update_diagram() {
             c_loop_all vl(*this);
             voronoicell_neighbor c;
@@ -724,6 +665,8 @@ class container_poly : public container_base, public radius_poly {
             }
         }
 
+        // Liang Mi Created 12/1/2017, Modified 09/28/2018
+        // Update the diagram with current h AND compute Hessian
         inline void update_diagram(std::vector<vot::Dirac> &diracs, 
                                    Eigen::SparseMatrix<double>& pHessian) {
             c_loop_all vl(*this);
@@ -775,7 +718,7 @@ class container_poly : public container_base, public radius_poly {
             }
         }
 
-        //12/9/2017 Liang Mi
+        //Liang Mi Created 12/9/2017 
         // Scale is for separating cells for display.
         inline void draw_cells_separately(std::string filenamePrefix, double scale) {
             c_loop_all vl(*this); double *pp; voronoicell c;
