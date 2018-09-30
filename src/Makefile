@@ -23,6 +23,7 @@ include Makefile.dep
 libvot.a: $(objs)
 	rm -f libvot.a
 	ar rs libvot.a $^
+	mv libvot.a $(LIBDIR)
 
 %.o: %.cc
 	$(CXX) $(CFLAGS) $(E_INC) -c $<
@@ -32,5 +33,5 @@ help: Doxyfile $(SOURCE)
 
 clean:
 	rm -f $(objs)
-	rm -f libvot.a
+	rm -f $(LIBDIR)/libvot.a
 	
