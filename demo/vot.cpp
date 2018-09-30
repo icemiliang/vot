@@ -10,6 +10,7 @@
 
 using namespace vot;
 namespace po = boost::program_options;
+namespace fs = boost::filesystem;
 
 void print_welcome_message() {
     std::cout << "Variational Wasserstein clustering" << std::endl << std::endl;
@@ -18,7 +19,7 @@ void print_welcome_message() {
 int main(int argc, char* argv[]) {
 
     try {
-        std::string appName = boost::filesystem::basename(argv[0]); 
+        std::string appName = fs::basename(argv[0]); 
         std::string dmFile, emFile;
         int maxIterP, maxIterH; // Position of centroids & Minimizier H
         double thres, plotScale, learnRate;
@@ -36,12 +37,12 @@ int main(int argc, char* argv[]) {
                 "Max iteration for updating Dirac positions. Default is 5.")
             ("iterH,h", po::value<int>(&maxIterH)->default_value(1000), 
                 "Max iteration for updating diagram/'H', or size of cells. Default is 1000.")
-            ("threshold,t", po::value<double>(&thres)->default_value(1e-06), 
+            ("threshold,t", po::value<double>(&thres)->default_value(1.0e-06), 
                 "Threshold for terminating the program. Default is 1e-06")
             ("scale,s", po::value<double>(&plotScale)->default_value(1), 
                 "Scale of the output diagram. Default is 1.")
-            ("rate,r", po::value<double>(&learnRate)->default_value(0.2), 
-                "Learning rate. Default is 0.2.")
+            ("rate,r", po::value<double>(&learnRate)->default_value(0.0), 
+                "Learning rate. Setting this parameter means you want to use GD instead of Newton.")
             ("outdir,o", po::value<std::string>(&outDir), 
                 "Output directory")
             ("verbose,v", po::value<bool>(&verb)->default_value(false), 
@@ -81,6 +82,20 @@ int main(int argc, char* argv[]) {
                               
         if (!outDir.empty()) outPrefix = outDir + "/" + outPrefix;
 
+        fs::path dir(outDir.c_str());
+        if (!fs::is_directory(outDir)) {
+            std::cerr << "Directory not found: " << std::endl;
+            std::cerr << "Creating: " << std::endl;
+            if (fs::create_directory(dir)) { 
+                std::cerr << "Directory created: " << outDir << std::endl; 
+            }
+            else {
+                std::cerr << "Error during creating the directory. "
+                          << "Write output in the current directory." << std::endl;  
+                outDir.clear();
+            }   
+        }
+        
         std::cout << "Dirac measure file: " << dmFile << std::endl;
         std::cout << "Empirical measure file: " << emFile << std::endl;
         std::cout << "Max iteration for updating centroid positions: " << maxIterP << std::endl;

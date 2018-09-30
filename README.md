@@ -9,12 +9,12 @@ Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clus
 
 ## Build and run
 
-[![Build status](https://ci.appveyor.com/api/projects/status/7yw0ao44kfvjavfw?svg=true)](https://ci.appveyor.com/project/icemiliang/vot))
+[![Build status](https://ci.appveyor.com/api/projects/status/7yw0ao44kfvjavfw?svg=true)](https://ci.appveyor.com/project/icemiliang/vot)
 
 In the root directory, run:
 ```
 $ make clean
-$ make [-j7]
+$ make [-j4]
 ```
 
 Also, check Makefile, config.mk to change paths to requied libraries, e.g. Eigen.
@@ -31,7 +31,9 @@ Boost 1.58, Eigen 3
 
 The code has been tested on Ubuntu 16.04 with g++ 5.5.0
 
-Boost is mainly for I/O and is not necessary for using vot. You can skip it if you want to use vot as a library.
+Boost is mainly for I/O and is not necessary for using Vot. You can skip it if you want to use Vot as a library.
+
+Eigen 3.3.5 is provided in include/
 
 ## Options
 ```
@@ -74,7 +76,9 @@ Output files are compatible with Gnuplot. A sample Gnuplot script (gnuplotScript
 ## Code structure
 The command-line program is built from demo/vot.cpp
 
-The main body of the vot code is in src/ot.cc and src/diagram.cc
+The main body of the Vot code is in src/ot.cc and /src/diagram.cc
+
+A static library is built in lib/libvot.a
 
 We give credit to Voro++ (http://math.lbl.gov/voro++/) for computing power Voronoi diagrams. Many files in src/ are from Voro++, with our modification.
 
@@ -85,7 +89,7 @@ Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clus
 
 ```
 @inproceedings{mi2018variational,
-  title={Variational Wasserstein Clustering},
+  title={Variational {W}asserstein Clustering},
   author={Mi, Liang and Zhang, Wen and Gu, Xianfeng and Wang, Yalin},
   booktitle={Proceedings of the European Conference on Computer Vision (ECCV)},
   pages={322--337},

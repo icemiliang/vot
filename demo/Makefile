@@ -14,7 +14,7 @@ EXECUTABLES=vot
 all: $(EXECUTABLES)
 
 vot: vot.cpp
-	$(CXX) $(CFLAGS) $(E_INC) $(E_LIB) -o vot vot.cpp -lvot++ -lboost_filesystem -lboost_program_options -lboost_system
+	$(CXX) $(CFLAGS) $(E_INC) $(E_LIB) -o vot vot.cpp -lvot -lboost_filesystem -lboost_program_options -lboost_system
 
 clean:
 	rm -f $(EXECUTABLES)

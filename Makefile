@@ -12,7 +12,7 @@ include config.mk
 # Build all of the executable files
 all:
 	$(MAKE) -C src
-	$(MAKE) -C demos
+	$(MAKE) -C demo
 
 # Build the help files (with Doxygen)
 help:
@@ -21,4 +21,4 @@ help:
 # Clean up the executable files
 clean:
 	$(MAKE) -C src clean
-	$(MAKE) -C demos clean
+	$(MAKE) -C demo clean

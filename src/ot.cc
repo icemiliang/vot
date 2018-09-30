@@ -25,6 +25,7 @@ namespace vot {
         mMaxIterH = pMaxIterH;
         mThres = pThres;
         mLearnRate = pLearnRate;
+        mMethod = pLearnRate > 0.0 ? METHOD_GD : METHOD_NEWTON;
 
         mDiagram->setup(mFlagVerbose);
     }
@@ -100,7 +101,7 @@ namespace vot {
             // OT 
             int iterH = 0;
             while (iterH < mMaxIterH) {
-                if (mDiagram->update(METHOD_NEWTON, mThres, mLearnRate, iterD, iterH)) {
+                if (mDiagram->update(mMethod, mThres, mLearnRate, iterD, iterH)) {
                     break;
                 }
                 iterH++;
