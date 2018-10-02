@@ -34,3 +34,4 @@ help: Doxyfile $(SOURCE)
 clean:
 	rm -f $(objs)
 	rm -f $(LIBDIR)/libvot.a
+	

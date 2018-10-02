@@ -34,11 +34,6 @@ namespace vot {
     const int ERROR_IN_COMMAND_LINE = 1;
     const int ERROR_UNHANDLED_EXCEPTION = 2;
 
-    const int FUNCTION_VOT = 1;
-    const int FUNCTION_VPM = 2; 
-    const std::string FUNCTION_VOT_STRING = "Variational Optimal Transportation";
-    const std::string FUNCTION_CLUSTER_STRING = "Variational Clustering";
-    const std::string FUNCTION_SKELETON_STRING = "Variational Skeleton Extraction";
 }
 
 #endif

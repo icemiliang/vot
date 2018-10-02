@@ -29,19 +29,17 @@ public:
     // Main process
     // Return success or error
     bool update(int method, double thres, double step, int iterD, int iterH); // update h
+    bool update_bf(int method, double thres, double step, int iterD, int iterH); // update h
     
     // Return true if Dirac measures are stale
     bool update_dirac();
-    bool update_dirac_beta();
-    // Return max length between adjacent Dirac
-    double interpolate();
 
     void write_results(int const iterD, int const iterH, std::string filePrefix);
 
     double total_dirac_mass();
     double total_empirical_mass();
 
-    void setup(const bool verbose);
+    void setup(const bool verbose, const bool debug);
 
 protected:
     void draw_diagram(std::string filename);
@@ -49,9 +47,11 @@ protected:
     void write_dirac_as_input(std::string filename);
     void update_h(double step);
     void update_h(Eigen::SparseMatrix<double>& pHessian);
+    void update_h_bf(double step);
 
     double compute_wasserstein();
     double compute_gradient(); // Return the norm of gradients
+    double compute_gradient_bf();
 
     voro::container_poly *mDiagram;
     std::vector<Empirical> mEmpiricals;
@@ -65,17 +65,9 @@ protected:
     std::vector<double> mHs;
 
     bool mFlagVerbose;
+    bool mFlagDebug;
 };
 
-class DiagramSphere : public Diagram {
-public:
-    DiagramSphere(const otBBox bBox, const int numBlocks);
-};
-
-class DiagramCylinder : public Diagram {
-public:
-    DiagramCylinder(const otBBox bBox, const int numBlocks);
-};
 }
 
 #endif

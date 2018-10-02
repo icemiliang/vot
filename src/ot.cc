@@ -16,20 +16,6 @@ namespace vot {
         check_total_mass();
     }
 
-    void OT::setup(const int pMaxIterD, const int pMaxIterH, const double pThres, 
-                   const double pLearnRate, const bool pFlagVerbose, const double pPlotScale,
-                   const std::string pFilePrefix) {
-        mFlagVerbose = pFlagVerbose;
-        mOutFilePrefix = pFilePrefix;
-        mMaxIterD = pMaxIterD;
-        mMaxIterH = pMaxIterH;
-        mThres = pThres;
-        mLearnRate = pLearnRate;
-        mMethod = pLearnRate > 0.0 ? METHOD_GD : METHOD_NEWTON;
-
-        mDiagram->setup(mFlagVerbose);
-    }
-
     void OT::read_dirac_from_file(std::string pFilename) {
         std::string line, temp, tempNumP;
         std::ifstream measureFile(pFilename);
@@ -80,6 +66,20 @@ namespace vot {
         }
     }
 
+    void OT::setup(const int pMaxIterD, const int pMaxIterH, const double pThres, 
+                   const double pLearnRate, const bool pFlagVerbose, const double pPlotScale,
+                   const std::string pFilePrefix, const bool pFlagDebug) {
+        mFlagVerbose = pFlagVerbose;
+        mOutFilePrefix = pFilePrefix;
+        mMaxIterD = pMaxIterD;
+        mMaxIterH = pMaxIterH;
+        mThres = pThres;
+        mLearnRate = pLearnRate;
+        mMethod = pLearnRate > 0.0 ? METHOD_GD : METHOD_NEWTON;
+
+        mDiagram->setup(pFlagVerbose, pFlagDebug);
+    }
+
     void OT::check_total_mass() {
         double totalDirac = mDiagram->total_dirac_mass();
         double totalEmpirical = mDiagram->total_empirical_mass();
@@ -94,6 +94,7 @@ namespace vot {
                "Total Dirac: " << totalDirac << " not equal to total Empirical: " << totalEmpirical);
     }
 
+    // Main function
     void OT::cluster() {
         int iterD = 0;
         mDiagram->write_results(0, 0, mOutFilePrefix);
@@ -102,6 +103,29 @@ namespace vot {
             int iterH = 0;
             while (iterH < mMaxIterH) {
                 if (mDiagram->update(mMethod, mThres, mLearnRate, iterD, iterH)) {
+                    break;
+                }
+                iterH++;
+                // mDiagram->write_results(iterD, iterH, mOutFilePrefix);
+            }
+            // Update dirac
+            if (mDiagram->update_dirac()) {
+                break;
+            }
+            iterD++;
+            mDiagram->write_results(iterD, 0, mOutFilePrefix);
+        }
+        // mDiagram->write_results(iterD, iterH, mOutFilePrefix);
+    }
+
+    void OT::cluster_bf() {
+        int iterD = 0;
+        mDiagram->write_results(0, 0, mOutFilePrefix);
+        while (iterD < mMaxIterD) {
+            // OT 
+            int iterH = 0;
+            while (iterH < mMaxIterH) {
+                if (mDiagram->update_bf(mMethod, mThres, mLearnRate, iterD, iterH)) {
                     break;
                 }
                 iterH++;

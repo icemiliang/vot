@@ -17,23 +17,21 @@ $ make clean
 $ make [-j4]
 ```
 
-Also, check Makefile, config.mk to change paths to requied libraries, e.g. Eigen.
+Check Makefile and config.mk to change paths if necessary.
 
-A command-line program is built from vot.cpp in demo/
+A command-line program 'vot' is built from vot.cpp in demo/
 
 A minimum command for running vot:
 ```
-$ ./vot -e data/empirical.vot -d data/dirac.vot 
+$ ./vot -e /data/empirical.vot -d /data/dirac.vot 
 ```
 
 ## Dependences
-Boost 1.58, Eigen 3 
+Boost 1.58, Eigen 3 (included in include/Eigen 3.3.5)
 
 The code has been tested on Ubuntu 16.04 with g++ 5.5.0
 
 Boost is mainly for I/O and is not necessary for using Vot. You can skip it if you want to use Vot as a library.
-
-Eigen 3.3.5 is provided in include/
 
 ## Options
 ```
@@ -53,7 +51,7 @@ Eigen 3.3.5 is provided in include/
 One iteration of the Wasserstein clustering is optimal transport. If you only want to compute the transport, set iterP to 1.
 
 ## Input and output files
-Sample input files are provided in demo/data/
+Sample input files are provided in /demo/data/
 
 ### Input:
 
@@ -71,16 +69,16 @@ Sample input files are provided in demo/data/
 
   *.gnu specifies the resulting power Voronoi diagram.
 
-Output files are compatible with Gnuplot. A sample Gnuplot script (gnuplotScripts.txt) is also provided in demo/. If you are using the sample files, the script should plot the picture above.
+Output files are compatible with Gnuplot. A sample Gnuplot script (gnuplotScripts.txt) is also provided in /demo/. If you are using the sample files, the script should plot the picture above.
 
 ## Code structure
-The command-line program is built from demo/vot.cpp
+The command-line program is built from /demo/vot.cpp
 
-The main body of the Vot code is in src/ot.cc and /src/diagram.cc
+The main body of the Vot code is in /src/ot.cc and /src/diagram.cc
 
-A static library is built in lib/libvot.a
+A static library is built in /lib/libvot.a
 
-We give credit to Voro++ (http://math.lbl.gov/voro++/) for computing power Voronoi diagrams. Many files in src/ are from Voro++, with our modification.
+We give credit to Voro++ (http://math.lbl.gov/voro++/) for computing power Voronoi diagrams. Many files in /src/ are from Voro++, with our modification.
 
 ## Reference
 If you find the code helpful, please cite the following article:

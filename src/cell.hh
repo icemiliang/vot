@@ -10,8 +10,6 @@
 #ifndef VOROPP_CELL_HH
 #define VOROPP_CELL_HH
 
-//#include <vector> // Liang Mi 09/13/2017
-
 #include "config.hh"
 #include "common.hh"
 

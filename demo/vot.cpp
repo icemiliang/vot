@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
         int maxIterP, maxIterH; // Position of centroids & Minimizier H
         double thres, plotScale, learnRate;
         std::string outDir;
-        bool verb;
+        bool verb, debug;
 
         // Define and parse the program options //
         po::options_description desc("Options");
@@ -47,6 +47,8 @@ int main(int argc, char* argv[]) {
                 "Output directory")
             ("verbose,v", po::value<bool>(&verb)->default_value(false), 
                 "Verbose output (both console and files). Default is False.")
+            ("debug,b", po::value<bool>(&debug)->default_value(false), 
+                "Multiple-point check. Default is False.")
             ("help", "Print help messages");
         po::variables_map vm;
         
@@ -83,7 +85,7 @@ int main(int argc, char* argv[]) {
         if (!outDir.empty()) outPrefix = outDir + "/" + outPrefix;
 
         fs::path dir(outDir.c_str());
-        if (!fs::is_directory(outDir)) {
+        if (!outDir.empty() && !fs::is_directory(outDir)) {
             std::cerr << "Directory not found: " << std::endl;
             std::cerr << "Creating: " << std::endl;
             if (fs::create_directory(dir)) { 
@@ -115,11 +117,12 @@ int main(int argc, char* argv[]) {
         ot->import_data(dmFile, emFile);
 
         std::cout << "--> Setting up parameters... " << std::endl;
-        ot->setup(maxIterP, maxIterH, thres, learnRate, verb, plotScale, outPrefix);
+        ot->setup(maxIterP, maxIterH, thres, learnRate, verb, plotScale, outPrefix, debug);
         std::cout << std::endl;
 
         std::cout << "--> Running variational Wasserstein clustering..." << std::endl << std::endl;
-        ot->cluster();
+        // ot->cluster();
+        ot->cluster_bf();
 
     }
     catch(std::exception& e){

@@ -88,6 +88,13 @@ public:
                       (mP[1] - pDirac[1]) * (mP[1] - pDirac[1]) +
                       (mP[2] - pDirac[2]) * (mP[2] - pDirac[2]));
     };
+
+    double costL2_tmp(Dirac &pDirac) const {
+       return ((mP[0] - pDirac[0]) * (mP[0] - pDirac[0]) +
+               (mP[1] - pDirac[1]) * (mP[1] - pDirac[1]) +
+               (mP[2] - pDirac[2]) * (mP[2] - pDirac[2]));
+    };
+    
 protected:
     //double mP[3]; // Derived from Point
     double mMass;
