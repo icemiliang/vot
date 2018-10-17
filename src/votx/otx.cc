@@ -2,7 +2,7 @@
 //
 // Author   : Mi,Liang (Arizona State University)
 // Email    : icemiliang@gmail.com
-// Date     : Oct 4th 2018
+// Date     : Oct 16th 2018
 
 #include "otx.hh"
 
