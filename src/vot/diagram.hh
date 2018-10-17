@@ -2,7 +2,7 @@
 //
 // Author   : Mi,Liang (Arizona State University)
 // Email    : icemiliang@gmail.com
-// Date     : Sept 27th 2018
+// Date     : Oct 16th 2018
 
 #ifndef DIAGRAM_HH
 #define DIAGRAM_HH

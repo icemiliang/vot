@@ -2,7 +2,7 @@
 #
 # Author   : Mi,Liang (Arizona State University)
 # Email    : icemiliang@gmail.com
-# Date     : Sept 28th 2018
+# Date     : Oct 16th 2018
 
 # C++ compiler
 CXX=g++

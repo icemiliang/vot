@@ -2,7 +2,7 @@
 //
 // Author   : Mi,Liang (Arizona State University)
 // Email    : icemiliang@gmail.com
-// Date     : Oct 12th 2018
+// Date     : Oct 16th 2018
 
 #include "otx.hh"
 #include <boost/program_options.hpp>
@@ -45,9 +45,9 @@ int main(int argc, char* argv[]) {
                 "Learning rate. Setting this parameter means you want to use GD instead of Newton.")
             ("outdir,o", po::value<std::string>(&outDir), 
                 "Output directory")
-            ("verbose,v", po::value<bool>(&verb)->default_value(true), 
+            ("verbose,v", po::value<bool>(&verb)->default_value(false), 
                 "Verbose output (both console and files). Default is False.")
-            ("debug,b", po::value<bool>(&debug)->default_value(true), 
+            ("debug,b", po::value<bool>(&debug)->default_value(false), 
                 "Multiple-point check. Default is False.")
             ("help", "Print help messages");
         po::variables_map vm;
