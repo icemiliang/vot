@@ -19,7 +19,7 @@ $ make [-j4]
 
 Check Makefile and config.mk to change paths if necessary.
 
-We provide two versions of Vot -- Vot and Votx. Vot runs with convex hulls and is for the 3-D Euclidean space. Votx is for n-D Euclidean space. If you want to get a 3D Voronoi diagram, use Vot. Otherwise, use Votx.
+We provide two versions of Vot -- Vot and Votx. Vot uses Newton's method with convex hulls and is for the 3-D Euclidean space. Votx uses gradient descent and is for n-D Euclidean space. If you want to get a 3D Voronoi diagram, use Vot. Otherwise, use Votx.
 
 Two command-line program 'vot' and 'votx' are built from vot.cpp and votx.cpp in /demo/
 
