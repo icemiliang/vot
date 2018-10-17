@@ -1,7 +1,7 @@
 # Vot
 ## A C++ library for computing variational optimal transportation
 
-This package includes the prototype codes for reproducing the mapping in Figure 4 (b) of the paper:
+This package includes the prototype codes for reproducing the map in Figure 4 (b) of the paper:
 
 Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clustering." In Proceedings of the European Conference on Computer Vision (ECCV), pp. 322-337. 2018.
 
@@ -71,7 +71,7 @@ Sample input files are provided in /demo/data/
 
   Output files of Vot are compatible with Gnuplot. A sample Gnuplot script (gnuplotScripts.txt) is also provided in /demo/. If you are using the sample files, the script should plot the picture above.
 
-  Votx does not involve convex hulls. We provide a Matlab script is provided to plot the resulging samples.
+  Votx does not involve convex hulls. We provide a Matlab script to plot the resulging samples.
 
 ## Code structure
 The command-line programs are built from /demo/vot.cpp and /demo/votx.cpp
