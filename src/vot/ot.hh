@@ -22,7 +22,6 @@ public:
                const double pLearnRate, const bool pFlagVerbose, const double pPlotScale,
                const std::string pFilePrefix, const bool pFlagDebug);
     void cluster();
-    void cluster_bf();
 
 protected:
     void read_empirical_from_file(std::string filename);

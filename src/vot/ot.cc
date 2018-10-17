@@ -90,7 +90,7 @@ namespace vot {
             std::cout << "       Diff: " << fabs(totalDirac - totalEmpirical) << std::endl;
             std::cout << std::endl;
         }
-        ASSERT_VOT(fabs(totalDirac - totalEmpirical) / totalDirac < otTOLERANCE,
+        ASSERT_VOT(fabs(totalDirac - totalEmpirical) / totalDirac < otTOLERANCE*1000,
                "Total Dirac: " << totalDirac << " not equal to total Empirical: " << totalEmpirical);
     }
 
@@ -117,28 +117,4 @@ namespace vot {
         }
         // mDiagram->write_results(iterD, iterH, mOutFilePrefix);
     }
-
-    void OT::cluster_bf() {
-        int iterD = 0;
-        mDiagram->write_results(0, 0, mOutFilePrefix);
-        while (iterD < mMaxIterD) {
-            // OT 
-            int iterH = 0;
-            while (iterH < mMaxIterH) {
-                if (mDiagram->update_bf(mMethod, mThres, mLearnRate, iterD, iterH)) {
-                    break;
-                }
-                iterH++;
-                // mDiagram->write_results(iterD, iterH, mOutFilePrefix);
-            }
-            // Update dirac
-            if (mDiagram->update_dirac()) {
-                break;
-            }
-            iterD++;
-            mDiagram->write_results(iterD, 0, mOutFilePrefix);
-        }
-        // mDiagram->write_results(iterD, iterH, mOutFilePrefix);
-    }
-
 }

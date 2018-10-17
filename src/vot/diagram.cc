@@ -129,22 +129,6 @@ namespace vot {
         return false;
     }
 
-    bool Diagram::update_bf(int method, double thres, double step, int iterP, int iterH) {
-        // Hessian is computed during updating the diagram
-
-        // Return true if gradient doesn't change too much.
-        if (mFlagVerbose) 
-            std::cout << "iterP: " << iterP << ", iterH: " << iterH << ". ";
-        
-        if (compute_gradient_bf() < thres) {
-            return true;
-        }
-
-        update_h(step);
-
-        return false;
-    }
-
     bool Diagram::update_dirac() {
         std::vector<Dirac> newDiracs(mNumDiracs, Dirac(0, 0, 0, 0, 0, false));
         // Sum up all empirical measures
@@ -237,59 +221,6 @@ namespace vot {
         return gradNorm;
     }
 
-    // brute force
-    double Diagram::compute_gradient_bf() {
-        // Reset cell mass
-        for (int i = 0; i < mNumDiracs; i++) {
-            mDiracs[i].reset_mass();
-        }
-
-        // Assign cellIndex to every measure and add mass to that cell
-        for (int i = 0; i < mNumEmpiricals; i++) {
-
-            // Find assignment by bruteforce
-            double dist = otMaxDouble;
-            int idx = -1;
-            for (int j = 0; j < mNumDiracs; j++) {
-                double tmpDist1 = mEmpiricals[i].costL2_tmp(mDiracs[j]);
-                double tmpDist2 = tmpDist1 - mHs[j];
-                if (tmpDist2 < dist) {
-                    dist = tmpDist2;
-                    idx = j;
-                }
-            }
-
-            mEmpiricals[i].set_cellIndex(idx);
-            mDiracs[idx].add_mass(mEmpiricals[i].mass());            
-        }
-
-        // Multiple-point check
-        if (mFlagDebug) {
-            double sumMass = 0;
-            double sumH = 0;
-            for (int i = 0; i < mNumDiracs; i++) {
-                sumMass += mDiracs[i].mass();
-                sumH += mHs[i];
-            }
-            std::cout << "[Debug] Total mass of Diracs: " << sumMass << std::endl;
-            std::cout << "[Debug] Total h of Diracs: " << sumH << std::endl;
-            getchar();
-        }
-
-        // Compute gradient and its norm
-        double gradNorm = 0;
-        mGradient = Eigen::VectorXd::Zero(mNumDiracs);
-        for (int i = 0; i < mNumDiracs; i++) {
-            mGradient(i) = mDiracs[i].mass() - mDiracs[i].dirac();
-        }
-        gradNorm = mGradient.norm();
-        if (mFlagVerbose) {
-            std::cout << "Gradient norm: " << gradNorm << std::endl;
-        }
-
-        return gradNorm;
-    }
-
     // method: gradient descent or newton
     void Diagram::update_h(double step) {
         for (int i = 0; i < mNumDiracs; i++) {
@@ -301,16 +232,6 @@ namespace vot {
         mDiagram->clear();
         for (int i = 0; i < mNumDiracs; i++) {
             mDiagram->put(i, mDiracs[i].x(), mDiracs[i].y(), mDiracs[i].z(), sqrt(mHs[i]));
-        }
-    }
-
-    // method: gradient descent or newton
-    void Diagram::update_h_bf(double step) {
-        for (int i = 0; i < mNumDiracs; i++) {
-            mHs[i] -= step * mGradient[i]; // delta h
-            if(mHs[i] <= 0) {
-                std::cout << "[warning] H: " << mHs[i] << std::endl;
-            }
         }
     }
 

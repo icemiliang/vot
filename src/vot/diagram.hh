@@ -29,7 +29,6 @@ public:
     // Main process
     // Return success or error
     bool update(int method, double thres, double step, int iterD, int iterH); // update h
-    bool update_bf(int method, double thres, double step, int iterD, int iterH); // update h
     
     // Return true if Dirac measures are stale
     bool update_dirac();
@@ -47,11 +46,9 @@ protected:
     void write_dirac_as_input(std::string filename);
     void update_h(double step);
     void update_h(Eigen::SparseMatrix<double>& pHessian);
-    void update_h_bf(double step);
 
     double compute_wasserstein();
     double compute_gradient(); // Return the norm of gradients
-    double compute_gradient_bf();
 
     voro::container_poly *mDiagram;
     std::vector<Empirical> mEmpiricals;

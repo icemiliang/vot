@@ -121,8 +121,7 @@ int main(int argc, char* argv[]) {
         std::cout << std::endl;
 
         std::cout << "--> Running variational Wasserstein clustering..." << std::endl << std::endl;
-        // ot->cluster();
-        ot->cluster_bf();
+        ot->cluster();
 
     }
     catch(std::exception& e){
