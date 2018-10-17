@@ -4,8 +4,8 @@
 // Email    : icemiliang@gmail.com
 // Date     : Sept 27th 2018
 
-#ifndef _VOT_H_
-#define _VOT_H_
+#ifndef VOT_H
+#define VOT_H
 
 #include <iostream>
 #include <sstream>
@@ -27,21 +27,16 @@
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
 
-#ifndef NDEBUG
-#   define ASSERT_VOT(condition, message) \
+#  define ASSERT_VOT(condition, message) \
     do { \
         if (! (condition)) { \
             std::cerr << "--> Assertion `" #condition "` failed in " << __FILE__ \
                       << " line " << __LINE__ << ": " << message << std::endl; \
             std::terminate(); \
         } \
-    } while (false)
+    } while (false);
 
-#	define add_check_point(idx) \
-	std::cout << " check point: " << idx << std::endl; \
-
-
-#endif
-
+#define add_check_point(idx) \
+	std::cout << " check point: " << idx << std::endl;
 
 #endif

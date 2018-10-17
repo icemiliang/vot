@@ -7,9 +7,9 @@
 #ifndef POINTBASEX_HH
 #define POINTBASEX_HH
 
-#include "vot.hh"
+#include "basics.hh"
 
-namespace vot {
+namespace votx {
 
 // Point in the n-dimensioal vector space
 class PointX {

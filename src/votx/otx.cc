@@ -6,7 +6,7 @@
 
 #include "otx.hh"
 
-namespace vot {
+namespace votx {
     void OTX::setup(const int pMaxIterD, const int pMaxIterH, const double pThres,
         const double pLearnRate, const bool pFlagVerb, const double vPlotScale,
         const std::string pPrefix, const bool pFlagDebug) {
@@ -111,7 +111,6 @@ namespace vot {
             while (iterH < vMaxIterH) {
                 // break if map converges 
                 if (update_map(iterD, iterH)) {
-                    add_check_point(1);
                     if (vFlagVerb) write_results(iterD,iterH);
                     break;
                 } 

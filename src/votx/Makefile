@@ -15,7 +15,7 @@ src=$(patsubst %.o,%.cc,$(objs))
 all: $(objs) libvotx.a 
 
 depend:
-	$(CXX) $(E_INC) -MM $(src) >Makefile.dep
+	$(CXX) $(E_INCX) -MM $(src) >Makefile.dep
 
 include Makefile.dep
 
@@ -25,7 +25,7 @@ libvotx.a: $(objs)
 	mv libvotx.a $(LIBDIR)
 
 %.o: %.cc
-	$(CXX) $(CFLAGS) $(E_INC) -c $<
+	$(CXX) $(CFLAGS) $(E_INCX) -c $<
 
 clean:
 	rm -f $(objs)

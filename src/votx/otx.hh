@@ -9,7 +9,7 @@
 
 #include "pointX.hh"
 
-namespace vot {
+namespace votx {
 
 class OTX {
 public:

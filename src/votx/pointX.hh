@@ -9,7 +9,7 @@
 
 #include "pointbaseX.hh"
 
-namespace vot {
+namespace votx {
 
 class EmpiricalX;
 class DiracX;

@@ -4,13 +4,12 @@
 // Email    : icemiliang@gmail.com
 // Date     : Sept 27th 2018
 
-#ifndef _constants_H_
-#define _constants_H_
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 #include <limits>
 
 namespace vot {
-
     const double otTOLERANCE = 0.0000001;
     const double otTOTAL_MASS = 1.0;
 
@@ -42,28 +41,6 @@ namespace vot {
     const std::string ERR_MSG_INDEX_OUT_OF_RANGE = "[Error] Index out of range.";
     const std::string ERR_MSG_DIMENSION_MISMATCH = "[Error] Dimensions don't match.";
     const std::string ERR_MSG_ZERO_DIVIDER = "[Error] Divider too close to zero.";
-
-
-
-    // OTX n-dimensional OT 
-
-    const double OTX_TOLERANCE = 0.00000001;
-    const double OTX_TOTAL_MASS = 1.0;
-
-    struct OTX_BOX{
-        const double xMin = -1.0 - OTX_TOLERANCE;
-        const double yMin = -1.0 - OTX_TOLERANCE;
-        const double zMin = -1.0 - OTX_TOLERANCE;
-        const double xMax =  1.0 + OTX_TOLERANCE;
-        const double yMax =  1.0 + OTX_TOLERANCE;
-        const double zMax =  1.0 + OTX_TOLERANCE;
-    };
-
-    const double OTX_MAX_DOUBLE = std::numeric_limits<double>::max();
-    const double OTX_MIN_DOUBLE = -std::numeric_limits<double>::max();
-
-    const int OTX_METHOD_GD = 1; // Gradient descent
-    const int OTX_METHOD_NEWTON = 2; // Newton's
 }
 
 #endif

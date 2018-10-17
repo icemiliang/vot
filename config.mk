@@ -22,5 +22,6 @@ SRCDIRX = ../../src/votx/
 CFLAGS=-Wall -ansi -pedantic -O3 -std=c++11
 
 # Include and library paths
-E_INC=-I$(SRCDIR) -I$(SRCDIR_DEMO) -I$(SRCDIRX) -I$(SRCDIRX_DEMO) -I$(INCDIR) -I$(INCDIR_DEMO) -I/usr/include/
+E_INC=-I$(SRCDIR) -I$(SRCDIR_DEMO) -I$(INCDIR) -I$(INCDIR_DEMO) -I/usr/include/
+E_INCX=-I$(SRCDIRX) -I$(SRCDIRX_DEMO) -I$(INCDIR) -I$(INCDIR_DEMO) -I/usr/include/
 E_LIB=-L$(LIBDIR) -L$(LIBDIR_DEMO) -L/usr/lib/
