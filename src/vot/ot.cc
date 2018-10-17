@@ -16,20 +16,6 @@ namespace vot {
         check_total_mass();
     }
 
-    void OT::setup(const int pMaxIterD, const int pMaxIterH, const double pThres, 
-                   const double pLearnRate, const bool pFlagVerbose, const double pPlotScale,
-                   const std::string pFilePrefix) {
-        mFlagVerbose = pFlagVerbose;
-        mOutFilePrefix = pFilePrefix;
-        mMaxIterD = pMaxIterD;
-        mMaxIterH = pMaxIterH;
-        mThres = pThres;
-        mLearnRate = pLearnRate;
-        mMethod = pLearnRate > 0.0 ? METHOD_GD : METHOD_NEWTON;
-
-        mDiagram->setup(mFlagVerbose);
-    }
-
     void OT::read_dirac_from_file(std::string pFilename) {
         std::string line, temp, tempNumP;
         std::ifstream measureFile(pFilename);
@@ -57,7 +43,7 @@ namespace vot {
                 mDiagram->add_dirac(stod(x), stod(y), stod(z), stod(d), stod(m), stod(h), stod(f));    
         }
     }
-
+    
     void OT::read_empirical_from_file(std::string pFilename) {
         std::string line, temp, tempNumM;
         std::ifstream measureFile(pFilename);
@@ -80,6 +66,20 @@ namespace vot {
         }
     }
 
+    void OT::setup(const int pMaxIterD, const int pMaxIterH, const double pThres, 
+                   const double pLearnRate, const bool pFlagVerbose, const double pPlotScale,
+                   const std::string pFilePrefix, const bool pFlagDebug) {
+        mFlagVerbose = pFlagVerbose;
+        mOutFilePrefix = pFilePrefix;
+        mMaxIterD = pMaxIterD;
+        mMaxIterH = pMaxIterH;
+        mThres = pThres;
+        mLearnRate = pLearnRate;
+        mMethod = pLearnRate > 0.0 ? METHOD_GD : METHOD_NEWTON;
+
+        mDiagram->setup(pFlagVerbose, pFlagDebug);
+    }
+
     void OT::check_total_mass() {
         double totalDirac = mDiagram->total_dirac_mass();
         double totalEmpirical = mDiagram->total_empirical_mass();
@@ -90,10 +90,11 @@ namespace vot {
             std::cout << "       Diff: " << fabs(totalDirac - totalEmpirical) << std::endl;
             std::cout << std::endl;
         }
-        ASSERT_VOT(fabs(totalDirac - totalEmpirical) / totalDirac < otTOLERANCE,
+        ASSERT_VOT(fabs(totalDirac - totalEmpirical) / totalDirac < otTOLERANCE*1000,
                "Total Dirac: " << totalDirac << " not equal to total Empirical: " << totalEmpirical);
     }
 
+    // Main function
     void OT::cluster() {
         int iterD = 0;
         mDiagram->write_results(0, 0, mOutFilePrefix);
@@ -116,5 +117,4 @@ namespace vot {
         }
         // mDiagram->write_results(iterD, iterH, mOutFilePrefix);
     }
-
 }

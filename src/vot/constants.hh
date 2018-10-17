@@ -4,15 +4,15 @@
 // Email    : icemiliang@gmail.com
 // Date     : Sept 27th 2018
 
-#ifndef _constants_H_
-#define _constants_H_
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 #include <limits>
 
 namespace vot {
-
-    const double otTOLERANCE = 0.00001;
+    const double otTOLERANCE = 0.0000001;
     const double otTOTAL_MASS = 1.0;
+
     struct otBBox{
         const double xMin = -1.0 - otTOLERANCE;
         const double xMax = 1.0 + otTOLERANCE;
@@ -34,11 +34,13 @@ namespace vot {
     const int ERROR_IN_COMMAND_LINE = 1;
     const int ERROR_UNHANDLED_EXCEPTION = 2;
 
-    const int FUNCTION_VOT = 1;
-    const int FUNCTION_VPM = 2; 
-    const std::string FUNCTION_VOT_STRING = "Variational Optimal Transportation";
-    const std::string FUNCTION_CLUSTER_STRING = "Variational Clustering";
-    const std::string FUNCTION_SKELETON_STRING = "Variational Skeleton Extraction";
+    const int ERR_INDEX_OUT_OF_RANGE = 11;
+    const int ERR_DIMENSIONS_MISMATCH = 15;
+    const int ERR_ZERO_DIVIDER = 21;
+
+    const std::string ERR_MSG_INDEX_OUT_OF_RANGE = "[Error] Index out of range.";
+    const std::string ERR_MSG_DIMENSION_MISMATCH = "[Error] Dimensions don't match.";
+    const std::string ERR_MSG_ZERO_DIVIDER = "[Error] Divider too close to zero.";
 }
 
 #endif

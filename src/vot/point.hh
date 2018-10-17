@@ -11,7 +11,7 @@
 
 namespace vot {
 
-// Dirac samples
+// Dirac sample
 class Dirac: public Point {
 public:
     Dirac(const double pX, const double pY, const double pZ, 
@@ -61,15 +61,14 @@ public:
         }
         return true;
     };
-protected:
 
+protected:
     double mDirac;
     double mMass;
     bool mFix;
 };
 
-
-// Empirical samples
+// Empirical sample
 class Empirical : public Point {
 public:
     // Constructor
@@ -88,13 +87,18 @@ public:
                       (mP[1] - pDirac[1]) * (mP[1] - pDirac[1]) +
                       (mP[2] - pDirac[2]) * (mP[2] - pDirac[2]));
     };
+
+    double costL2_tmp(Dirac &pDirac) const {
+       return ((mP[0] - pDirac[0]) * (mP[0] - pDirac[0]) +
+               (mP[1] - pDirac[1]) * (mP[1] - pDirac[1]) +
+               (mP[2] - pDirac[2]) * (mP[2] - pDirac[2]));
+    };
+    
 protected:
     //double mP[3]; // Derived from Point
     double mMass;
     int mCellIndex;
-
 };
-
 
 }
 

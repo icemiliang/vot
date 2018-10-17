@@ -8,13 +8,20 @@
 CXX=g++
 
 # Diractories
-LIBDIR = ../lib/
-INCDIR = ../include/
-SRCDIR = ../src/
+LIBDIR_DEMO = ../lib/
+INCDIR_DEMO = ../include/
+SRCDIR_DEMO = ../src/vot/
+SRCDIRX_DEMO = ../src/votx/
+
+LIBDIR = ../../lib/
+INCDIR = ../../include/
+SRCDIR = ../../src/vot/
+SRCDIRX = ../../src/votx/
 
 # Flags for the C++ compiler
 CFLAGS=-Wall -ansi -pedantic -O3 -std=c++11
 
-# Include and library paths for compilation of the examples
-E_INC=-I$(SRCDIR) -I$(INCDIR) -I/usr/include/
-E_LIB=-L$(SRCDIR) -L$(LIBDIR) -L/usr/lib/
+# Include and library paths
+E_INC=-I$(SRCDIR) -I$(SRCDIR_DEMO) -I$(INCDIR) -I$(INCDIR_DEMO) -I/usr/include/
+E_INCX=-I$(SRCDIRX) -I$(SRCDIRX_DEMO) -I$(INCDIR) -I$(INCDIR_DEMO) -I/usr/include/
+E_LIB=-L$(LIBDIR) -L$(LIBDIR_DEMO) -L/usr/lib/

@@ -18,8 +18,9 @@ namespace vot {
         mNumDiracs = 0;
     }
 
-    void Diagram::setup(const bool verbose) {
+    void Diagram::setup(const bool verbose, const bool debug) {
         mFlagVerbose = verbose;
+        mFlagDebug = debug;
     }
 
     // x, y, z, dirac, mass, h, fix
@@ -74,6 +75,13 @@ namespace vot {
                                             + "_" + std::to_string(iterH) + ".vot";
         std::string pFileNameInput = pFilePrefix + "_" + std::to_string(iterD) 
                                                  + "_" + std::to_string(iterH) + "_input.vot";
+
+        // Reconstruct the diagram in case the data stored in the voro++ object is not updated.
+        mDiagram->clear();
+        for (int i = 0; i < mNumDiracs; i++) {
+            mDiagram->put(i, mDiracs[i].x(), mDiracs[i].y(), mDiracs[i].z(), sqrt(mHs[i]));
+        }
+        
         draw_diagram(diagramFileName);
         write_dirac(pFileName);
         write_dirac_as_input(pFileNameInput);
@@ -112,6 +120,7 @@ namespace vot {
         if (compute_gradient() < thres) {
             return true;
         }
+
         if (method == METHOD_NEWTON)
             update_h(hessian);
         else
@@ -168,94 +177,12 @@ namespace vot {
         return true;
     }
 
-    bool Diagram::update_dirac_beta() {
-        std::vector<Dirac> newDiracs(mNumDiracs, Dirac(0, 0, 0, 0, 0, false));
-        for (int iterE = 0; iterE < mNumEmpiricals; iterE++) {
-            // Index multiplied by 2
-            newDiracs[mEmpiricals[iterE].cellIndex()] += 
-                        Dirac(mEmpiricals[iterE].x() * mEmpiricals[iterE].mass(),
-                              mEmpiricals[iterE].y() * mEmpiricals[iterE].mass(),
-                              mEmpiricals[iterE].z() * mEmpiricals[iterE].mass(),
-                              0,
-                              mEmpiricals[iterE].mass());
-        }
-
-        // Update existing centroids
-        for (int i = 0; i < mNumDiracs; i++) {
-            newDiracs[i].reset_dirac(mDiracs[i].dirac());
-            newDiracs[i].set_fix(mDiracs[i].fix());
-            std::cout << "Mass #" << i << mDiracs[i].mass() << std::endl;
-
-            // If centroid fixed, then only update mass
-            if (newDiracs[i].fix()) {
-                newDiracs[i] = Dirac(mDiracs[i].x(),
-                                               mDiracs[i].y(),
-                                               mDiracs[i].z(),
-                                               mDiracs[i].dirac(),
-                                               newDiracs[i].mass());
-            }
-            else if (newDiracs[i].mass() == 0) {
-                newDiracs[i] = mDiracs[i];
-            }
-            else {
-                newDiracs[i] /= newDiracs[i].mass();
-            }
-        }
-
-        mDiracs = newDiracs;
-        std::cout << "Mass #" << 0 << mDiracs[0].mass() << std::endl;
-        // Reset h to 1
-        std::fill(mHs.begin(), mHs.end(), 10.0);
-        mHs.push_back(10.0);
-        return true;
-    }
-
-    double Diagram::interpolate() {
-        double maxLength = otMinDouble;
-        // double totalLength = 0.0;
-        int maxIndex = -1;
-
-        // Find the longest segment and insert a Dirac in the middle
-        for (int iterD = 0; iterD < mNumDiracs-1; iterD++) {
-            Point tmp = Point(mDiracs[iterD+1].x()-mDiracs[iterD].x(),
-                              mDiracs[iterD+1].y()-mDiracs[iterD].y(),
-                              mDiracs[iterD+1].z()-mDiracs[iterD].z());
-            // No need to do L-1 norm, save time.
-            double len = tmp.norm_squared();
-            std::cout << "Segment length: " << len << std::endl;
-            // totalLength += len;
-            if (len > maxLength) {
-                maxLength = len;
-                maxIndex = iterD;
-            }
-        }
-
-        ASSERT_VOT(maxIndex >= 0 && maxLength > otMinDouble,
-                   "Something is wrong during interpolation." << " maxIndex: " << maxIndex
-                   << ", maxLength: " << maxLength);
-        // Insert a new Dirac
-        Dirac tmpDirac = Dirac((mDiracs[maxIndex].x() + mDiracs[maxIndex+1].x())/2,
-                               (mDiracs[maxIndex].y() + mDiracs[maxIndex+1].y())/2,
-                               (mDiracs[maxIndex].z() + mDiracs[maxIndex+1].z())/2,
-                               (mDiracs[maxIndex].dirac() + mDiracs[maxIndex+1].dirac())/3,
-                               0,
-                               false);
-        mDiracs.insert(mDiracs.begin()+maxIndex+1, tmpDirac);
-
-        // Reduce dirac values of adjacent Dirac
-        mDiracs[maxIndex].reset_dirac(mDiracs[maxIndex].dirac()/3*2);
-        mDiracs[maxIndex+2].reset_dirac(mDiracs[maxIndex+2].dirac()/3*2);
-        mNumDiracs += 1;
-
-        return maxLength;
-    }
-
     double Diagram::compute_gradient() {
         // Reset cell mass
         for (int i = 0; i < mNumDiracs; i++) {
             mDiracs[i].reset_mass();
         }
-
+        
         // Assign cellIndex to every measure and add mass to that cell
         int cellIndex = -1;
         for (int i = 0; i < mNumEmpiricals; i++) {
@@ -266,11 +193,24 @@ namespace vot {
             mDiracs[cellIndex].add_mass(mEmpiricals[i].mass());
         }
 
+        // Multiple-point check
+        if (mFlagDebug) {
+            double sumMass = 0;
+            double sumH = 0;
+            for (int i = 0; i < mNumDiracs; i++) {
+                sumMass += mDiracs[i].mass();
+                sumH += mHs[i];
+            }
+            std::cout << "[Debug] Total mass of Diracs: " << sumMass << std::endl;
+            std::cout << "[Debug] Total h of Diracs: " << sumH << std::endl;
+            getchar();
+        }
+
+
         // Compute gradient and their norm
         double gradNorm = 0;
         mGradient = Eigen::VectorXd::Zero(mNumDiracs);
         for (int i = 0; i < mNumDiracs; i++) {
-            // This is not the real gradients but it's equivalent to the real ones, why? Liang Mi
             mGradient(i) = mDiracs[i].mass() - mDiracs[i].dirac();
         }
         gradNorm = mGradient.norm();
@@ -285,7 +225,7 @@ namespace vot {
     void Diagram::update_h(double step) {
         for (int i = 0; i < mNumDiracs; i++) {
             mHs[i] -= step * mGradient[i]; // delta h
-            assert(mHs[i] > 0);
+            ASSERT_VOT(mHs[i] > 0, "Negative h not allowed");
         }
         // I haven't found a way to directly update h
         // The alternative is to clear the diagram and define a new one with new h
@@ -306,6 +246,7 @@ namespace vot {
 
         // I haven't found a way to directly update h
         // The alternative is to clear the diagram and define a new one with new h
+        // Liang Mi
         mDiagram->clear();
         for (int i = 0; i < mNumDiracs; i++) {
             mDiagram->put(i, mDiracs[i].x(), mDiracs[i].y(), mDiracs[i].z(), sqrt(mHs[i]));

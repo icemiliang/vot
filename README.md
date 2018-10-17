@@ -1,7 +1,7 @@
 # Vot
 ## A C++ library for computing variational optimal transportation
 
-This package includes the prototype codes for reproducing the mapping in Figure 4 (b) of the paper:
+This package includes the prototype codes for reproducing the map in Figure 4 (b) of the paper:
 
 Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clustering." In Proceedings of the European Conference on Computer Vision (ECCV), pp. 322-337. 2018.
 
@@ -17,23 +17,24 @@ $ make clean
 $ make [-j4]
 ```
 
-Also, check Makefile, config.mk to change paths to requied libraries, e.g. Eigen.
+Check Makefile and config.mk to change paths if necessary.
 
-A command-line program is built from vot.cpp in demo/
+We provide two versions of Vot -- Vot and Votx. Vot uses Newton's method with convex hulls and is for the 3-D Euclidean space. Votx uses gradient descent and is for n-D Euclidean space. If you want to get a 3D Voronoi diagram, use Vot. Otherwise, use Votx.
 
-A minimum command for running vot:
+Two command-line program 'vot' and 'votx' are built from vot.cpp and votx.cpp in /demo/
+
+A minimum command for running vot (votx):
 ```
-$ ./vot -e data/empirical.vot -d data/dirac.vot 
+$ ./vot -e /data/empirical.vot -d /data/dirac.vot
+$ ./votx -e /data/empirical.votx -d /data/dirac.votx
 ```
 
 ## Dependences
-Boost 1.58, Eigen 3 
+Boost 1.58, Eigen 3 (included in include/Eigen 3.3.5)
 
-The code has been tested on Ubuntu 16.04 with g++ 5.5.0
+The code has been tested on Ubuntu 16.04 with g++ 5.5.0 and macOS 10.13.6 with g++ 4.2.1 (Apple's LLVM 10.0.0).
 
 Boost is mainly for I/O and is not necessary for using Vot. You can skip it if you want to use Vot as a library.
-
-Eigen 3.3.5 is provided in include/
 
 ## Options
 ```
@@ -47,40 +48,38 @@ Eigen 3.3.5 is provided in include/
   -r [ --rate ] arg (=0.2)              Learning rate for gradient descent. Default is 0.2. Not needed for
                                         Newtons's method.
   -o [ --outdir ] arg                   Output directory
-  -h [ --help ]                         Print help messages
+     [ --help ]                         Print help messages
 ```
 
 One iteration of the Wasserstein clustering is optimal transport. If you only want to compute the transport, set iterP to 1.
 
 ## Input and output files
-Sample input files are provided in demo/data/
+Sample input files are provided in /demo/data/
 
 ### Input:
+  *.vot and *.votx specifie Dirac or empirical measures
 
-  *.vot specifies Dirac or empirical measures
+  If you want to use vot on 2D point clouds, simplying set the third coordinate to 0.
 
-  This program mainly deals with unstructured 3D point clouds. For 2D clouds, simply set 'z' values to zeros. It still regards the data as of 3D. This is due to the nature of Voro++ which is 3D.
-
-  All samples must be within the range of (-1,1) in each dimension. The current version only supports a cubic boundary. Spherical boundary will be added soon.
-
-  A Python version and an n-dimensional version is comming soon.
+  All samples must be within the range of (-1,1) in each dimension. The total mass of Empirical measures must be equal to the total Dirac of Dirac measures.
 
 ### Output:
 
-  *.vot specifies the resulting Dirac measures.
+  *.vot or *votx specifies the resulting Dirac and Empirical measures.
 
-  *.gnu specifies the resulting power Voronoi diagram.
+  *.gnu specifies the resulting power Voronoi diagram from Vot.
 
-Output files are compatible with Gnuplot. A sample Gnuplot script (gnuplotScripts.txt) is also provided in demo/. If you are using the sample files, the script should plot the picture above.
+  Output files of Vot are compatible with Gnuplot. A sample Gnuplot script (gnuplotScripts.txt) is also provided in /demo/. If you are using the sample files, the script should plot the picture above.
+
+  Votx does not involve convex hulls. We provide a Matlab script to plot the resulging samples.
 
 ## Code structure
-The command-line program is built from demo/vot.cpp
+The command-line programs are built from /demo/vot.cpp and /demo/votx.cpp
 
-The main body of the Vot code is in src/ot.cc and /src/diagram.cc
+The main body of the Vot code is in /src/vot/ot.cc and /src/vot/diagram.cc
+For Votx. it is in /src/votx/otx.cc
 
-A static library is built in lib/libvot.a
-
-We give credit to Voro++ (http://math.lbl.gov/voro++/) for computing power Voronoi diagrams. Many files in src/ are from Voro++, with our modification.
+A static library is built in /lib/libvot.a (/lib/libvotx.a)
 
 ## Reference
 If you find the code helpful, please cite the following article:

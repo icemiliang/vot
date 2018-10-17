@@ -19,8 +19,8 @@ public:
     void import_data(std::string pDiracFile, std::string pEmpiricalFile);
     // Import parameters
     void setup(const int pMaxIterP, const int pMaxIterH, const double pThres, 
-               const double pLearnRate, const bool pVerbose, const double pPlotScale,
-               const std::string pFilePrefix);
+               const double pLearnRate, const bool pFlagVerbose, const double pPlotScale,
+               const std::string pFilePrefix, const bool pFlagDebug);
     void cluster();
 
 protected:
@@ -33,6 +33,7 @@ protected:
 
     std::string mOutFilePrefix;
     bool mFlagVerbose;
+    bool mFlagDebug;
     int mMaxIterD;
     int mMaxIterH;
     double mThres;
