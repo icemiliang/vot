@@ -11,7 +11,7 @@
 
 namespace vot {
 
-// Dirac samples
+// Dirac sample
 class Dirac: public Point {
 public:
     Dirac(const double pX, const double pY, const double pZ, 
@@ -61,15 +61,14 @@ public:
         }
         return true;
     };
-protected:
 
+protected:
     double mDirac;
     double mMass;
     bool mFix;
 };
 
-
-// Empirical samples
+// Empirical sample
 class Empirical : public Point {
 public:
     // Constructor
@@ -99,9 +98,7 @@ protected:
     //double mP[3]; // Derived from Point
     double mMass;
     int mCellIndex;
-
 };
-
 
 }
 

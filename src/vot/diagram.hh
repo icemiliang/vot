@@ -21,7 +21,7 @@ public:
     Diagram(const otBBox bBox, const int numBlocks);
   
     // index x y z dirac mass h
-    void add_dirac( double x, double y, double z, double dirac, double mass, double h, bool fix);
+    void add_dirac(double x, double y, double z, double dirac, double mass, double h, bool fix);
 
     // index x y z mass centroidIndex
     void add_empirical( double x, double y, double z, double m, int p);

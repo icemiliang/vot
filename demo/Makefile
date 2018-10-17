@@ -8,7 +8,7 @@
 include ../config.mk
 
 # List of executables
-EXECUTABLES=vot
+EXECUTABLES= vot votx
 
 # Makefile rules
 all: $(EXECUTABLES)
@@ -16,7 +16,9 @@ all: $(EXECUTABLES)
 vot: vot.cpp
 	$(CXX) $(CFLAGS) $(E_INC) $(E_LIB) -o vot vot.cpp -lvot -lboost_filesystem -lboost_program_options -lboost_system
 
+votx: votx.cpp
+	$(CXX) $(CFLAGS) $(E_INC) $(E_LIB) -o votx votx.cpp -lvotx -lboost_filesystem -lboost_program_options -lboost_system
+
 clean:
 	rm -f $(EXECUTABLES)
 
-.PHONY: all clean

@@ -276,7 +276,7 @@ namespace vot {
             getchar();
         }
 
-        // Compute gradient and their norm
+        // Compute gradient and its norm
         double gradNorm = 0;
         mGradient = Eigen::VectorXd::Zero(mNumDiracs);
         for (int i = 0; i < mNumDiracs; i++) {

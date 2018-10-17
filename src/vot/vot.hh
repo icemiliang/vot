@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <ctime>
 #include <iterator>
+#include <unordered_set>
 
 #include "constants.hh"
 
@@ -35,8 +36,12 @@
             std::terminate(); \
         } \
     } while (false)
-#else
-#   define ASSERT_VOT(condition, message) do { } while (false)
+
+#	define add_check_point(idx) \
+	std::cout << " check point: " << idx << std::endl; \
+
+
 #endif
+
 
 #endif

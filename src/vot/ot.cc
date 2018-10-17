@@ -43,7 +43,7 @@ namespace vot {
                 mDiagram->add_dirac(stod(x), stod(y), stod(z), stod(d), stod(m), stod(h), stod(f));    
         }
     }
-
+    
     void OT::read_empirical_from_file(std::string pFilename) {
         std::string line, temp, tempNumM;
         std::ifstream measureFile(pFilename);
