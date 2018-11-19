@@ -25,8 +25,8 @@ Two command-line program 'vot' and 'votx' are built from vot.cpp and votx.cpp in
 
 A minimum command for running vot (votx):
 ```
-$ ./vot -e /data/empirical.vot -d /data/dirac.vot
-$ ./votx -e /data/empirical.votx -d /data/dirac.votx
+$ ./vot -e data/empirical.vot -d data/dirac.vot
+$ ./votx -e data/empirical.votx -d data/dirac.votx
 ```
 
 ## Dependences
