@@ -7,6 +7,8 @@ Mi, Liang, Wen Zhang, Xianfeng Gu, and Yalin Wang. "Variational Wasserstein Clus
 
 ![alt text](demo/sample.png?raw=true "Demo of Variational Wasserstein Clustering")
 
+[Click me for a Python version](https://github.com/icemiliang/pyvot)
+
 ## Build and run
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7yw0ao44kfvjavfw?svg=true)](https://ci.appveyor.com/project/icemiliang/vot)
