@@ -1,6 +1,6 @@
 # Vot
 
-This repo is outdated. Please refer to our Python repo [https://github.com/icemiliang/pyvot](https://github.com/icemiliang/pyvot) for the latest development. We will refactor this repo later this year.
+**This repo is outdated. Please refer to our Python repo [https://github.com/icemiliang/pyvot](https://github.com/icemiliang/pyvot) for the latest development. We will refactor this C++ version later this year.**
 
 ## A C++ library for computing variational optimal transportation
 
